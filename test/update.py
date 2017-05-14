@@ -4,6 +4,14 @@ import textwrap
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw 
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-a', '--all',  action="store_true", help='stores output to an /all directory for easy importing')
+args = parser.parse_args()
+
+
 
 
 #Perhaps an enum would have served me better here...
@@ -39,6 +47,13 @@ costFont = ImageFont.truetype("VerilySerifMono.otf", 32)
 textFont = ImageFont.truetype("VerilySerifMono.otf", 16)
 textFontLong = ImageFont.truetype("VerilySerifMono.otf", 12)
 
+
+#Make all folder, if necessary
+if args.all:
+	if not os.path.exists('all'):
+		os.makedirs('all')
+		
+		
 
 for i in range(2,sheet.max_row + 1):
 	folder = sheet.cell(row=i, column=COLUMN_COLOR).value
@@ -113,4 +128,9 @@ for i in range(2,sheet.max_row + 1):
 				
 			
 	img.save(folder + '/' + subfolder + '/' + sheet.cell(row=i,column=COLUMN_NAME).value.replace(" ", "_") + '.png')
+	
+	#make a second copy for easy import
+	if args.all:
+		img.save('all' + '/' + sheet.cell(row=i,column=COLUMN_NAME).value.replace(" ", "_") + '.png')
+		
 	img.close()
