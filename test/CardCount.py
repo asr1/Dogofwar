@@ -57,11 +57,12 @@ for i in sheetnums:
 opts = []
 
 
-run = 0
+
 
 while THRESHOLD > 0:
 	sheetnums2 = copy.deepcopy(sheetnums)
-
+	run = 0
+	
 	#Do the business
 	while run < 3:
 		first = None
@@ -83,6 +84,10 @@ while THRESHOLD > 0:
 			opts.append(sub)
 		
 		print(opts)
+		sum = 0
+		for n in opts:
+			sum += n
+		print("Total: " + str(sum))
 		opts.clear()
 		print()
 		run = run + 1
