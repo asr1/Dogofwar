@@ -1,5 +1,6 @@
 import sys
 import math
+import copy
 
 THRESHOLD = 5 #The most amount I'm willing to go over
 
@@ -58,46 +59,48 @@ opts = []
 
 run = 0
 
+while THRESHOLD > 0:
+	sheetnums2 = copy.deepcopy(sheetnums)
 
-#Do the business
-while run < 3:
-	first = None
-	remain = num + THRESHOLD
-	while remain > 0:
-		sub = max(opt.xy for opt in sheetnums if opt.xy <= remain)
-		if first is None:
-			for m in sheetnums:
-				#print(m)
-				if m.xy == sub:
-					first = m
-					break
+	#Do the business
+	while run < 3:
+		first = None
+		remain = num + THRESHOLD
+		while remain > 0:
+			sub = max(opt.xy for opt in sheetnums2 if opt.xy <= remain)
+			if first is None:
+				for m in sheetnums2:
+					#print(m)
+					if m.xy == sub:
+						first = m
+						break
+			
+			
+			print("First is: " + str(first))
+			print("sub: " + str(sub))
+			remain = remain - sub
+			
+			opts.append(sub)
 		
+		print(opts)
+		opts.clear()
+		print()
+		run = run + 1
+		sheetnums2.remove(first)
 		
-		print("First is: " + str(first))
-		print("sub: " + str(sub))
-		remain = remain - sub
+
+		#for y in sheetnums:
+		#	amt = x * y
+		#	remaining = num
+		#	o = option()
+		#	o.tups.append((x,y))
+		#	for i in o.tups:
+		#		print(i)
+
+
+	#for x in range(0, int(math.sqrt(num) + 1)):
+	#	print(x)
+	THRESHOLD = THRESHOLD - 1
 		
-		opts.append(sub)
-	
-	print(opts)
-	opts.clear()
-	print()
-	run = run + 1
-	sheetnums.remove(first)
-	
-
-	#for y in sheetnums:
-	#	amt = x * y
-	#	remaining = num
-	#	o = option()
-	#	o.tups.append((x,y))
-	#	for i in o.tups:
-	#		print(i)
-
-
-#for x in range(0, int(math.sqrt(num) + 1)):
-#	print(x)
-	
-	
 
 	
